@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  app:
+    container_name: webApp
+    image: chathuradandeniya/webapp:1.1.1
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=test
+    healthcheck:
+      # check health of the container
+      # The "test"command Docker runs to determine the health of the container. 
+      # This command should exit with a status code of 0 to indicate healthiness.
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 1m # The time period between running the check (here set to 1 minute).
+      timeout: 10s # The time period after which the check is considered failed (here set to 10 seconds).
+      retries: 3 # The number of retries before the container is considered unhealthy (here set to 3).
+      start_period: 30s # The time period after the container has started before the checks are run (here set to 30 seconds).
